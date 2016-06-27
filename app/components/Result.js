@@ -18,7 +18,14 @@ export default class Result extends Component {
     return (
       <tr>
         <td>{result.title}</td>
-        <td>{result.description}</td>
+        <td>{result.description.split("\n").map( (line) => {
+          return (
+            <span>
+              {line}
+              <br />
+            </span>
+          )
+        })}</td>
         <td>{result.assignees.join(", ")}</td>
         <td>{result.tags.join(", ")}</td>
       </tr>
