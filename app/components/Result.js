@@ -17,8 +17,8 @@ export default class Result extends Component {
     let result = this.props.result;
     return (
       <tr>
-        <td className="task-title">{result.title}</td>
-        <td className="task-description">{result.description.split("\n").map( (line) => {
+        <td>{result.title}</td>
+        <td>{result.description.split("\n").map( (line) => {
           return (
             <span>
               {line}
@@ -26,8 +26,8 @@ export default class Result extends Component {
             </span>
           )
         })}</td>
-        <td className="task-assignees">{result.assignees.join(", ")}</td>
-        <td className="task-tags">{result.tags.join(", ")}</td>
+        <td>{result.assignees.join(", ")}</td>
+        <td>{result.tags.join(", ")}</td>
       </tr>
     );
   }
