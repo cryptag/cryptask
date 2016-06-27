@@ -57,8 +57,9 @@ export default class App extends Component {
     plaintags.push('type:task');
 
     request
-      .get('/rows?plaintags=' + plaintags.join(','))
+      .post('/rows/get')
       .use(cryptagdPrefix)
+      .send(plaintags)
       .end( (err, res) => {
         let results = [];
         let flashMessage = '';
