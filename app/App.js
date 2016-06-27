@@ -40,7 +40,8 @@ export default class App extends Component {
     let stripped = [];
     for (let i = 0; i < plaintags.length; i++) {
       if (plaintags[i].startsWith(prefix)) {
-        stripped.push(plaintags[i].slice(prefix.length, plaintags[i].length));
+        // Strip off prefix
+        stripped.push(plaintags[i].slice(prefix.length));
       }
     }
     return stripped;
