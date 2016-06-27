@@ -10,7 +10,10 @@ export default class ResultList extends Component {
       <table role="table" className="table table-striped">
         <thead>
           <tr>
-            <th>Tasks</th>
+            <th>Title</th>
+            <th>Descriptions</th>
+            <th>Assignees</th>
+            <th>Tags</th>
           </tr>
         </thead>
         <tbody>
