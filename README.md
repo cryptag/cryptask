@@ -73,5 +73,6 @@ If you're on Linux, instead run:
 
 ## Thank Yous
 
-_Major_ thanks to @jimmcgaw for writing the foundations to this app,
-which began as a clone of jimmcgaw/cpassui@d072b0f .
+_Major_ thanks to [@jimmcgaw](https://github.com/jimmcgaw) for writing
+the foundations to this app, which began as a clone of
+[jimmcgaw/cpassui@d072b0f](https://github.com/jimmcgaw/cpassui/commit/d072b0fa8d9c2442a094cae98bf2acafb28154f3).
