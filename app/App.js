@@ -47,11 +47,15 @@ export default class App extends Component {
     return stripped;
   }
 
+  cleanedFields(s){
+    let fields = s.trim().replace(',', ' ').split(/\s+/g);
+    return fields.filter(f => f !== '');
+  }
+
   executeSearch(e){
     e.preventDefault();
 
-    // TODO: Ensure no commas appear in the search terms
-    let plaintags = this.state.searchValue.trim().split(/\s+/g);
+    let plaintags = this.cleanedFields(this.state.searchValue)
 
     // Only fetch Tasks (not text, files, nor anything else)
     plaintags.push('type:task');
