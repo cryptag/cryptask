@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ResultList from './components/ResultList';
 import SearchForm from './components/SearchForm';
+import SaveTaskForm from './components/SaveTaskForm';
 
 const request = require('superagent');
 const utf8 = require('utf8');
@@ -12,18 +13,62 @@ export default class App extends Component {
     super(props);
 
     this.state = {
+      // Search
       searchValue: '',
       flashMessage: '',
-      results: []
+      results: [],
+
+      // Save task
+      title: '',
+      description: '',
+      assignees: '',
+      tags: '',
+      saveTaskFormMessage: ''
     };
 
     this.onChangeTagValue = this.onChangeTagValue.bind(this);
     this.executeSearch = this.executeSearch.bind(this);
+
+    this.onChangeSaveTitle = this.onChangeSaveTitle.bind(this);
+    this.onChangeSaveDescription = this.onChangeSaveDescription.bind(this);
+    this.onChangeSaveAssignees = this.onChangeSaveAssignees.bind(this);
+    this.onChangeSaveTags = this.onChangeSaveTags.bind(this);
+    this.saveTask = this.saveTask.bind(this);
+  }
+
+  mergeState(obj){
+    this.setState(
+      Object.assign(this.state, obj)
+    )
   }
 
   onChangeTagValue(e){
-    this.setState({
+    this.mergeState({
       searchValue: e.target.value
+    });
+  }
+
+  onChangeSaveTitle(e){
+    this.mergeState({
+      title: e.target.value
+    });
+  }
+
+  onChangeSaveDescription(e){
+    this.mergeState({
+      description: e.target.value
+    });
+  }
+
+  onChangeSaveAssignees(e){
+    this.mergeState({
+      assignees: e.target.value
+    });
+  }
+
+  onChangeSaveTags(e){
+    this.mergeState({
+      tags: e.target.value
     });
   }
 
@@ -94,10 +139,78 @@ export default class App extends Component {
       });
   }
 
+  saveTask(e){
+    e.preventDefault();
+
+    let title = this.state.title.trim();
+    if (!title) {
+      this.mergeState({saveTaskFormMessage: 'Error: title cannot be empty'});
+      return
+    }
+
+    // TODO: Clarify to user that tags should be
+    // space-separated. Later, make them comma-separated and split on
+    // /,\s+/
+    let plaintags = this.cleanedFields(this.state.tags);
+
+    let assignees = this.cleanedFields(this.state.assignees);
+    plaintags = plaintags.concat(
+      assignees.map(a => 'assignee:'+a)
+    );
+
+    // Add tags users should't have to worry about
+    plaintags = plaintags.concat(['type:task', 'app:cryptask']);
+
+    let task = {
+      Title: title,
+      Description: this.state.description
+    }
+
+    let row = {
+      unencrypted: btoa(utf8.encode(JSON.stringify(task))),
+      plaintags: plaintags
+    }
+
+    request
+      .post('/rows')
+      .use(cryptagdPrefix)
+      .send(row)
+      .end( (err, res) => {
+        let saveTaskFormMessage = '';
+
+        if (err) {
+          if (typeof res === 'undefined') {
+            saveTaskFormMessage = err.toString();
+          } else {
+            saveTaskFormMessage = res.body.error;
+          }
+
+          this.mergeState({saveTaskFormMessage: saveTaskFormMessage});
+
+          return
+        }
+
+        // Success
+
+        let tags = res.body.plaintags;
+        saveTaskFormMessage = 'New task saved with these tags: ' + tags.join(', ')
+
+        this.mergeState({saveTaskFormMessage: saveTaskFormMessage});
+      });
+  }
+
   render(){
     return (
       <div>
         <div className="row">
+          <SaveTaskForm
+            saveTask={this.saveTask}
+            onChangeSaveTitle={this.onChangeSaveTitle}
+            onChangeSaveDescription={this.onChangeSaveDescription}
+            onChangeSaveAssignees={this.onChangeSaveAssignees}
+            onChangeSaveTags={this.onChangeSaveTags}
+            saveTaskFormMessage={this.state.saveTaskFormMessage} />
+
           <SearchForm
             executeSearch={this.executeSearch}
             onChangeTagValue={this.onChangeTagValue}
