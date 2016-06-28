@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 
-import { clipboard } from 'electron';
-
 export default class Result extends Component {
   constructor(props){
     super(props);
-
-    this.onCopyResult = this.onCopyResult.bind(this);
-  }
-
-  onCopyResult(){
-    clipboard.writeText(this.props.result.password);
   }
 
   render(){

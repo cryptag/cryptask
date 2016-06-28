@@ -5,9 +5,6 @@ as a simple UI wrapper that talks to a local server/API/daemon
 `cryptagd` which is provided by
 [CrypTag](https://github.com/elimisteve/cryptag).
 
-If you're not using [CrypTag](https://github.com/elimisteve/cryptag) to manage your passwords, you
-should be. Go install it. It's awesome.
-
 ## Pre-requisites
 
 Install `cryptask-sandstorm` to create and store tasks and store them
@@ -27,7 +24,7 @@ To generate a Sandstorm webkey,
 then _click the key icon_ near the top of your screen.
 
 If someone else gave you the Sandstorm webkey along with the decrypt
-key needed to access the passwords s/he is sharing with you, also run
+key needed to access the tasks s/he is sharing with you, also run
 
     $ cryptask-sandstorm setkey <key>
 

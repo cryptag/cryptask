@@ -27,7 +27,7 @@ export default class SaveTaskForm extends Component {
 
         <div className="row">
           <div className="col-sm-1">
-            <button className="btn btn-primary">Save Password</button>
+            <button className="btn btn-primary">Save Task</button>
           </div>
         </div>
         <br />
