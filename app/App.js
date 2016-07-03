@@ -26,13 +26,12 @@ export default class App extends Component {
       saveTaskFormMessage: ''
     };
 
-    this.onChangeTagValue = this.onChangeTagValue.bind(this);
+    this.onChange = this.onChange.bind(this);
+
+    // Search form
     this.executeSearch = this.executeSearch.bind(this);
 
-    this.onChangeSaveTitle = this.onChangeSaveTitle.bind(this);
-    this.onChangeSaveDescription = this.onChangeSaveDescription.bind(this);
-    this.onChangeSaveAssignees = this.onChangeSaveAssignees.bind(this);
-    this.onChangeSaveTags = this.onChangeSaveTags.bind(this);
+    // Save form
     this.saveTask = this.saveTask.bind(this);
   }
 
@@ -42,34 +41,16 @@ export default class App extends Component {
     )
   }
 
-  onChangeTagValue(e){
-    this.mergeState({
-      searchValue: e.target.value
-    });
-  }
+  onChange(e){
+    var that = this;
 
-  onChangeSaveTitle(e){
-    this.mergeState({
-      title: e.target.value
-    });
-  }
-
-  onChangeSaveDescription(e){
-    this.mergeState({
-      description: e.target.value
-    });
-  }
-
-  onChangeSaveAssignees(e){
-    this.mergeState({
-      assignees: e.target.value
-    });
-  }
-
-  onChangeSaveTags(e){
-    this.mergeState({
-      tags: e.target.value
-    });
+    return {
+      change: (field, e) => {
+        var update = {};
+        update[field] = e.target.value
+        that.mergeState(update)
+      }
+    }
   }
 
   tagByPrefix(plaintags, prefix) {
@@ -205,15 +186,12 @@ export default class App extends Component {
         <div className="row">
           <SaveTaskForm
             saveTask={this.saveTask}
-            onChangeSaveTitle={this.onChangeSaveTitle}
-            onChangeSaveDescription={this.onChangeSaveDescription}
-            onChangeSaveAssignees={this.onChangeSaveAssignees}
-            onChangeSaveTags={this.onChangeSaveTags}
+            onChange={this.onChange().change}
             saveTaskFormMessage={this.state.saveTaskFormMessage} />
 
           <SearchForm
             executeSearch={this.executeSearch}
-            onChangeTagValue={this.onChangeTagValue}
+            onChange={this.onChange().change}
             flashMessage={this.state.flashMessage} />
         </div>
 

@@ -10,19 +10,19 @@ export default class SaveTaskForm extends Component {
       <form role="form" className="form" onSubmit={this.props.saveTask}>
 
         <div className="row col-sm-3">
-          <input className="form-control" type="text" placeholder="Title" onChange={this.props.onChangeSaveTitle} />
+          <input className="form-control" type="text" placeholder="Title" onChange={this.props.onChange.bind(this, 'title')} />
         </div>
 
         <div className="row col-sm-3">
-          <input className="form-control" type="text" placeholder="Description (optional)" onChange={this.props.onChangeSaveDescription} />
+          <input className="form-control" type="text" placeholder="Description (optional)" onChange={this.props.onChange.bind(this, 'description')} />
         </div>
 
         <div className="row col-sm-2">
-          <input className="form-control" type="text" placeholder="Assignees (optional)" onChange={this.props.onChangeSaveAssignees} />
+          <input className="form-control" type="text" placeholder="Assignees (optional)" onChange={this.props.onChange.bind(this, 'assignees')} />
         </div>
 
         <div className="row col-sm-3">
-          <input className="form-control" type="text" placeholder="Tags (optional)" onChange={this.props.onChangeSaveTags} />
+          <input className="form-control" type="text" placeholder="Tags (optional)" onChange={this.props.onChange.bind(this, 'tags')} />
         </div>
 
         <div className="row">
