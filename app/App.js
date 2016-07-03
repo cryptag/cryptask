@@ -44,6 +44,15 @@ export default class App extends Component {
   onChange(e){
     var that = this;
 
+    // This indirection is required because the forms call
+    // `this.onChange().change.bind(this, 'some-form-field-name')` as
+    // to pass in the first argument to the `change` function below.
+    //
+    // If forms simply call `this.onChange.bind(this, 'some-form-field-name')`
+    // then we can't call `this.mergeState(...)` below, because `this`
+    // would then refer to the form thanks to the form's calling of
+    // the `bind` method.
+
     return {
       change: (field, e) => {
         var update = {};
