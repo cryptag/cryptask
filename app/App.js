@@ -98,7 +98,7 @@ export default class App extends Component {
     request
       .post('/rows/get')
       .use(cryptagdPrefix)
-      .send(plaintags)
+      .send({"plaintags": plaintags})
       .end( (err, res) => {
         let results = [];
         let flashMessage = '';
